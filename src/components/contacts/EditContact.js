@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getContact, updateContact } from '../../actions/contactActions';
+
 import TextInputGroup from '../layout/TextInputGroup';
 
 class EditContact extends Component {
@@ -9,10 +12,29 @@ class EditContact extends Component {
     errors: {}
   };
 
-  onSubmit = (e) => {
+  UNSAFE_componentWillReceiveProps(nextProps, nextState) {
+    const { name, email, phone } = nextProps.contact;
+
+    this.setState({
+      name,
+      email,
+      phone
+    });
+  }
+
+  componentDidMount() {
+    const { id } = this.props.match.params;
+
+    this.props.getContact(id);
+  }
+
+  onSubmit = e => {
     e.preventDefault();
 
     const { name, email, phone } = this.state;
+    const { id } = this.props.match.params;
+
+    console.log(this.props.match.params.id);
 
     // Check For Errors
     if (name === '') {
@@ -31,14 +53,16 @@ class EditContact extends Component {
     }
 
     const updContact = {
+      id,
       name,
       email,
       phone
     };
 
-    const { id } = this.props.match.params;
+    console.log(updateContact);
 
     //// UPDATE CONTACT ////
+    this.props.updateContact(updContact);
 
     // Clear State
     this.setState({
@@ -98,4 +122,11 @@ class EditContact extends Component {
   }
 }
 
-export default EditContact;
+const mapStateToProps = state => ({
+  contact: state.contact.contact
+});
+
+export default connect(
+  mapStateToProps,
+  { getContact, updateContact }
+)(EditContact);
