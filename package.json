@@ -1,11 +1,13 @@
 {
-  "name": "contactmanager",
-  "version": "0.1.0",
+  "name": "contactmanager_redux",
+  "version": "1.0.0",
+  "homepage": "https://sliim35.github.io/contactmanager_redux/",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.2",
     "classnames": "^2.2.6",
+    "gh-pages": "^1.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
@@ -18,6 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "yarn build && gh-pages -d build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
